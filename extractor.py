@@ -26,7 +26,7 @@ for index, word_row in tqdm.tqdm(filtered_lx.iterrows(), total=len(filtered_lx))
            pho_list.append(pho.name)
     dict_pho[mot] = pho_list
 
-with open('data/phonemized_lexicon.json' , 'w') as fp:
+with open('data/phonemized_lexicon.json', 'w') as fp:
     json.dump(dict_pho, fp, indent=4)
 
 pprint.pprint(dict_pho)
