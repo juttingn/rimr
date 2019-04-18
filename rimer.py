@@ -1,13 +1,12 @@
 from voxpopuli import Voice
 import json
-import tqdm
 import pprint
 
 with open('data/phonemized_lexicon.json', 'r') as f:
     phonemized_lexicon = json.load(f)
 
-l_rime = 3
-query = input()
+query = input("Quel mot voulez-vous faire rimer?")
+l_rime = int(input("Quelle est la longueur de la rime souhaitée? "))
 
 v = Voice(lang="fr")
 phonemes = v.to_phonemes(query)

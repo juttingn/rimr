@@ -22,11 +22,17 @@ for index, word_row in tqdm.tqdm(filtered_lx.iterrows(), total=len(filtered_lx))
         continue
     pho_list = []
     for pho in phonemes:
-       if pho.name != "_":
+        if pho.name != "_":
            pho_list.append(pho.name)
+        elif len(pho_list) <= 1:
+           pho_list.clear()
     dict_pho[mot] = pho_list
+
+
+
 
 with open('data/phonemized_lexicon.json', 'w') as fp:
     json.dump(dict_pho, fp, indent=4)
 
 pprint.pprint(dict_pho)
+
