@@ -1,12 +1,23 @@
 from voxpopuli import Voice
 import json
 import pprint
+import argparse
+
 
 with open('data/phonemized_lexicon.json', 'r') as f:
     phonemized_lexicon = json.load(f)
 
-query = input("Quel mot voulez-vous faire rimer?")
-l_rime = int(input("Quelle est la longueur de la rime souhaitée? "))
+#query = input("Quel mot voulez-vous faire rimer?")
+#l_rime = int(input("Quelle est la longueur de la rime souhaitée? "))
+parser = argparse.ArgumentParser()
+parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
+parser.add_argument("gram", help= "Quelle est la classe grammaticalle du mot que vous voulez faire rimer?", type=str)
+parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
+
+args = parser.parse_args()
+if args.query:
+
+
 
 v = Voice(lang="fr")
 phonemes = v.to_phonemes(query)

@@ -5,7 +5,7 @@ import tqdm
 import pprint
 
 lx = pd.read_csv('data/lexique.csv', sep='\t')
-filtered_lx = lx[lx['4_cgram'] == "NOM"]
+filtered_lx = lx[lx['4_cgram'].isin(["NOM" , "ADJ" , "ADV"])]
 
 
 dict_pho= {}
@@ -14,6 +14,7 @@ v = Voice(lang="fr")
 
 for index, word_row in tqdm.tqdm(filtered_lx.iterrows(), total=len(filtered_lx)):
     mot = word_row["1_ortho"]
+
     try:
         phonemes = v.to_phonemes(mot)
     except Exception as e:
@@ -24,9 +25,12 @@ for index, word_row in tqdm.tqdm(filtered_lx.iterrows(), total=len(filtered_lx))
     for pho in phonemes:
         if pho.name != "_":
            pho_list.append(pho.name)
-        elif len(pho_list) <= 1:
-           pho_list.clear()
-    dict_pho[mot] = pho_list
+    if len(pho_list) > 1:
+            word_data = dict()
+            word_data["gram"]= word_row["4_cgram"]
+            word_data["genre"] = word_row["5_genre"]
+            word_data["nb"] = word_row["6_nombre"]
+            dict_pho[mot] = word_data
 
 
 
