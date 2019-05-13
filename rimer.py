@@ -7,15 +7,18 @@ import argparse
 with open('data/phonemized_lexicon.json', 'r') as f:
     phonemized_lexicon = json.load(f)
 
-#query = input("Quel mot voulez-vous faire rimer?")
-#l_rime = int(input("Quelle est la longueur de la rime souhaitée? "))
-parser = argparse.ArgumentParser()
-parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
-parser.add_argument("gram", help= "Quelle est la classe grammaticalle du mot que vous voulez faire rimer?", type=str)
-parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
+query = input("Quel mot voulez-vous faire rimer?")
+l_rime = int(input("Quelle est la longueur de la rime souhaitée? "))
 
-args = parser.parse_args()
-if args.query:
+
+#parser = argparse.ArgumentParser()
+#parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
+#parser.add_argument("rime", help= "Quelle est la nature de la rime recherchée?")
+#parser.add_argument("--gram", help= "Quelle est la classe grammaticalle de la rime recherchée?", type=str)
+#parser.add_argument("--genre", help= "Quelle est le genre de la rime recherchée?", type=str)
+
+#args = parser.parse_args()
+#if args.query:
 
 
 
