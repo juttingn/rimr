@@ -51,7 +51,7 @@ if args.query:
 
 
         #if rime_length(pho_query, pho_list) >= l_rime:
-            #rimes.append(mot)
+            #rimes.append(mot) x
 
 
 
