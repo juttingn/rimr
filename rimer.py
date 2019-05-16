@@ -83,3 +83,5 @@ for mot, pho_list in phonemized_lexicon.items():
         rimes.append(mot)
 
 pprint.pprint(rimes)
+
+#zizz
