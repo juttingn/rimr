@@ -24,14 +24,14 @@ for index, word_row in tqdm.tqdm(filtered_lx.iterrows(), total=len(filtered_lx))
     pho_list = []
     for pho in phonemes:
         if pho.name != "_":
-           pho_list.append(pho.name)
+            pho_list.append(pho.name)
     if len(pho_list) > 1:
-            word_data = dict()
-            word_data["phoneme"] = pho_list
-            word_data["gram"] = word_row["4_cgram"]
-            word_data["genre"] = word_row["5_genre"]
-            word_data["nb"] = word_row["6_nombre"]
-            dict_pho[mot] = word_data
+        word_data = {"pho" : pho_list,
+                    "gram" : word_row["4_cgram"],
+                    "genre" : word_row["5_genre"],
+                    "nb" :  word_row["6_nombre"],
+                         }
+        dict_pho[mot] = word_data
 
 
 

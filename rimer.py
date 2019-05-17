@@ -13,10 +13,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
 parser.add_argument("--gram", help= "Quelle est la classe grammaticale?", type=str)
 parser.add_argument("--genre", help= "Quelle est le genre de la rime?", type=str)
-group = parser.add_mutually_exclusive_group():
-group.add_argument('-p','--pauvre', help='Rime pauvre', action='store_true',  type=str)
-group.add_argument('-r','--riche', help='Rime riche',  action='store_true', type=str)
+group = parser.add_mutually_exclusive_group()
+group.add_argument('-p', '--pauvre', help='Rime pauvre', action='store_true',  type=str)
+group.add_argument('-r', '--riche', help='Rime riche',  action='store_true', type=str)
+
 args = parser.parse_args()
+
+
 if args.query:
     v = Voice(lang="fr")
     phonemes = v.to_phonemes(query)
@@ -63,6 +66,7 @@ pho_query = []
 for pho in phonemes:
     if pho.name != "_":
         pho_query.append(pho.name)
+        
 
 
 def rime_length(pho_query, pho_list):
