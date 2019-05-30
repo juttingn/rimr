@@ -1,4 +1,4 @@
-from voxpopuli import Voice
+from voxpopuli import Voice, FrenchPhonemes
 import json
 import pprint
 import argparse
@@ -6,19 +6,22 @@ import argparse
 
 
 with open('data/phonemized_lexicon.json', 'r') as f:
-    phonemized_lexicon = json.load(f)
+    lexicon = json.load(f)
 
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
-parser.add_argument("--gram", help= "Quelle est la classe grammaticale des rimes recherchées?", type=str)
-parser.add_argument("--genre", help= "Quelle est le genre des rimes recherchées?", type=str)
-parser.add_argument("--nombre", help="Les rimes recherchées doivent-elles être au pluriel ou au singulier?", type=str)
+parser.add_argument("--gram", help= "Quelle est la classe grammaticale des rimes recherchées?", type=str,
+                    choices=["ADV", "ADJ", "NOM"])
+parser.add_argument("--genre", help= "Quelle est le genre des rimes recherchées?", type=str,
+                    choices=["m", "f"])
+parser.add_argument("--nombre", help="Les rimes recherchées doivent-elles être au pluriel ou au singulier?", type=str,
+                    choices=["p", "s"])
 group = parser.add_mutually_exclusive_group()
-group.add_argument('-p', '--pauvre', help='Rime pauvre', action='store_true',  type=str)
-group.add_argument('-r', '--riche', help='Rime riche',  action='store_true', type=str)
-group.add_argument('-n', '--numérique', help="Rime numérique", action="store_true", type=int)
+group.add_argument('-p', '--pauvre', help='Rime pauvre', action='store_true')
+group.add_argument('-r', '--riche', help='Rime riche',  action='store_true')
+group.add_argument('-n', '--numérique', help="Rime numérique", action="store_true")
 
 args = parser.parse_args()
 
@@ -34,7 +37,7 @@ for pho in phonemes:
 
 
 
-def rime_length(pho_query, pho_list):
+def rime_length(pho_query, pho_list, natural=False):
     rime_number = 0
     min_l = min(len(pho_query), len(pho_list))
     for i in range(min_l):
@@ -45,9 +48,20 @@ def rime_length(pho_query, pho_list):
     return rime_number
 
 
+def natural_rime_length(pho_query, pho_list):
+    rime_number = 0
+    min_l = min(len(pho_query), len(pho_list))
+    for i in range(min_l):
+        if pho_query[-(i + 1)] == pho_list[-(i + 1)] , :
+            rime_number += 1
+        else:
+            break
+    return rime_number
+
 rimes = []
 
-for mot, pho_list in phonemized_lexicon.items():
+for mot, word_data in lexicon.items():
+    pho_list = word_data['pho']
     if args.riche:
         if rime_length(pho_query, pho_list) >= 3:
             rimes.append(mot)
