@@ -11,9 +11,10 @@ with open('data/phonemized_lexicon.json', 'r') as f:
 
 
 parser = argparse.ArgumentParser()
+
 parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
 parser.add_argument("--gram", help= "Quelle est la classe grammaticale des rimes recherchées?", type=str,
-                    choices=["ADV", "ADJ", "NOM"])
+                    choices=["ADV", "ADJ", "NOM"], action="append")
 parser.add_argument("--genre", help= "Quelle est le genre des rimes recherchées?", type=str,
                     choices=["m", "f"])
 parser.add_argument("--nombre", help="Les rimes recherchées doivent-elles être au pluriel ou au singulier?", type=str,
@@ -88,7 +89,7 @@ if __name__ == "__main__":
         # certain words are 'skipped'.
 
         if args.gram is not None:
-            if args.gram != word_data['gram']:
+            if word_data['gram'] in args.gram:
                 continue
         if args.genre is not None:
             if args.genre != word_data['genre']:
