@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("query", help= "Quel mot voulez-vous faire rimer?", type=str)
 parser.add_argument("--gram", help= "Quelle est la classe grammaticale des rimes recherchées?", type=str,
-                    choices=["ADV", "ADJ", "NOM"], action="append")
+                    choices=["ADV", "ADJ", "NOM"], nargs="*")
 parser.add_argument("--genre", help= "Quelle est le genre des rimes recherchées?", type=str,
                     choices=["m", "f"])
 parser.add_argument("--nombre", help="Les rimes recherchées doivent-elles être au pluriel ou au singulier?", type=str,
