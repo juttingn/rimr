@@ -65,7 +65,7 @@ if __name__ == "__main__":
         pho_list = word_data['pho']
 
         # Depending on the argument selected by the user regarding grammatical class, genre, number,
-        # certain words are 'skipped'
+        # certain words are 'skipped'.
 
         if args.gram is not None:
             if args.gram != word_data['gram']:
