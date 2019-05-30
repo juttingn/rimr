@@ -103,4 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# pycharm config
 .idea
+
+# rendered lexicon
+data/phonemized_lexicon.json
+

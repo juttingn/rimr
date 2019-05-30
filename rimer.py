@@ -24,18 +24,6 @@ group.add_argument('-r', '--riche', help='Rime riche',  action='store_true')
 group.add_argument('-n', '--numerique', help="Rime numérique", type=int)
 
 
-
-
-v = Voice(lang="fr")
-phonemes = v.to_phonemes(args.query)
-
-pho_query = []
-for pho in phonemes:
-    if pho.name != "_":
-        pho_query.append(pho.name)
-
-
-
 def rime_length(pho_query, pho_list, natural=False):
     rime_number = 0
     min_l = min(len(pho_query), len(pho_list))
@@ -80,6 +68,14 @@ def natural_rime_length(syllabized_query, syllabized_list):
 if __name__ == "__main__":
     args = parser.parse_args()
 
+    v = Voice(lang="fr")
+    phonemes = v.to_phonemes(args.query)
+
+    pho_query = []
+    for pho in phonemes:
+        if pho.name != "_":
+            pho_query.append(pho.name)
+
     rimes =[]
     for mot, word_data in lexicon.items():
         pho_list = word_data['pho']
@@ -97,17 +93,21 @@ if __name__ == "__main__":
             continue
 
         # If the user wants a 'rich' rime, or wants to manually input the rime length,
-        # only words with a specific amount of consecutive identical phonemes from the ennd are selected.
+        # only words with a specific amount of consecutive identical phonemes from the end are selected.
         # If the user wants a 'poor' rime or doesn't specify the power of the rime, only words
         # with 1 or more identical consecutive phoneme(s) from the end are selected.
         if args.riche:
-            if natural_rime_length(pho_query, pho_list) >= 3:
+            syllabized_query = syllabizer(pho_query)
+            syllabized_list = syllabizer(pho_list)
+            if natural_rime_length(syllabized_query, syllabized_list) >= 2:
                 rimes.append(mot)
         elif args.numerique is not None:
             if rime_length(pho_query, pho_list) >= args.numerique:
                 rimes.append(mot)
         else:
-            if natural_rime_length(pho_query, pho_list) >= 1:
+            syllabized_query = syllabizer(pho_query)
+            syllabized_list = syllabizer(pho_list)
+            if natural_rime_length(syllabized_query, syllabized_list) >= 1:
                 rimes.append(mot)
 
 
