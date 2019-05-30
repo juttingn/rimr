@@ -1,4 +1,4 @@
-# rimr
+# RIMR
 projet d'informatique de moteur de rimes
 
 ## Installation
