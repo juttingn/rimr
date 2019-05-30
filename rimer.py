@@ -48,11 +48,31 @@ def rime_length(pho_query, pho_list, natural=False):
     return rime_number
 
 
-def natural_rime_length(pho_query, pho_list):
+def syllabizer(pho_list):
+    """Le syllabizer prends en argument une liste de phonèmes, puis les ajoute à une "liste d'attente"  (syllablebuffer)
+     en attendant qu'on détermine sa voyelle correspondante pour stocker celle-ci dans syllable_list. C'est cette liste
+      qui est retournée par le syllabizer."""
+    syllabe_list = []
+    syllablebuffer = []
+    for pho in pho_list:
+        if pho in FrenchPhonemes.CONSONANTS:
+            syllablebuffer.append(pho)
+        elif pho in FrenchPhonemes.VOWELS:
+            syllablebuffer.append(pho)
+            syllabe = "".join(syllablebuffer)
+            syllabe_list.append(syllabe)
+            syllablebuffer = []
+    #si le syllablebuffer n'est pas vide on ajoute les phonèmes à la dernière syllabe
+    if syllablebuffer:
+        syllabe_list[-1] += "".join(syllablebuffer)
+    return syllabe_list
+
+
+def natural_rime_length(syllabized_query, syllabized_list):
     rime_number = 0
-    min_l = min(len(pho_query), len(pho_list))
+    min_l = min(len(syllabized_query), len(syllabized_list))
     for i in range(min_l):
-        if pho_query[-(i + 1)] == pho_list[-(i + 1)] , :
+        if syllabized_query[-(i + 1)] == syllabized_list[-(i + 1)]:
             rime_number += 1
         else:
             break
