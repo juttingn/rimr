@@ -21,9 +21,8 @@ parser.add_argument("--nombre", help="Les rimes recherchées doivent-elles être
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-p', '--pauvre', help='Rime pauvre', action='store_true')
 group.add_argument('-r', '--riche', help='Rime riche',  action='store_true')
-group.add_argument('-n', '--numérique', help="Rime numérique", action="store_true")
+group.add_argument('-n', '--numerique', help="Rime numérique", type=int)
 
-args = parser.parse_args()
 
 
 
@@ -58,19 +57,38 @@ def natural_rime_length(pho_query, pho_list):
             break
     return rime_number
 
-rimes = []
+if __name__ == "__main__":
+    args = parser.parse_args()
 
-for mot, word_data in lexicon.items():
-    pho_list = word_data['pho']
-    if args.riche:
-        if rime_length(pho_query, pho_list) >= 3:
-            rimes.append(mot)
-    elif args.pauvre:
-        if rime_length(pho_query, pho_list) >=1:
-            rimes.append(mot)
-    else:
-        if rime_length(pho_query, pho_list) >= args.numérique:
-            rimes.append(mot)
+    rimes =[]
+    for mot, word_data in lexicon.items():
+        pho_list = word_data['pho']
+
+        # Depending on the argument selected by the user regarding grammatical class, genre, number,
+        # certain words are 'skipped'
+
+        if args.gram is not None:
+            if args.gram != word_data['gram']:
+                continue
+        if args.genre is not None:
+            if args.genre != word_data['genre']:
+                continue
+        if args.nombre is not None and args.nombre != word_data['nb']:
+            continue
+
+        # If the user wants a 'rich' rime, or wants to manually input the rime length,
+        # only words with a specific amount of consecutive identical phonemes from the ennd are selected.
+        # If the user wants a 'poor' rime or doesn't specify the power of the rime, only words
+        # with 1 or more identical consecutive phoneme(s) from the end are selected.
+        if args.riche:
+            if natural_rime_length(pho_query, pho_list) >= 3:
+                rimes.append(mot)
+        elif args.numerique is not None:
+            if rime_length(pho_query, pho_list) >= args.numerique:
+                rimes.append(mot)
+        else:
+            if natural_rime_length(pho_query, pho_list) >= 1:
+                rimes.append(mot)
 
 
-
+    pprint.pprint(rimes)
