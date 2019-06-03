@@ -25,7 +25,7 @@ group.add_argument('-r', '--riche', help='Rime riche',  action='store_true')
 group.add_argument('-n', '--numerique', help="Rime numérique", type=int)
 
 
-def rime_length(pho_query, pho_list, natural=False):
+def rime_length(pho_query, pho_list):
     rime_number = 0
     min_l = min(len(pho_query), len(pho_list))
     for i in range(min_l):
@@ -56,16 +56,6 @@ def syllabizer(pho_list):
     return syllabe_list
 
 
-def natural_rime_length(syllabized_query, syllabized_list):
-    rime_number = 0
-    min_l = min(len(syllabized_query), len(syllabized_list))
-    for i in range(min_l):
-        if syllabized_query[-(i + 1)] == syllabized_list[-(i + 1)]:
-            rime_number += 1
-        else:
-            break
-    return rime_number
-
 if __name__ == "__main__":
     args = parser.parse_args()
 
@@ -84,7 +74,7 @@ if __name__ == "__main__":
         # Depending on the argument selected by the user regarding grammatical class, genre, number,
         # certain words are 'skipped'.
 
-        if args.gram is not None and args.gram != word_data['gram']:
+        if args.gram is not None and word_data['gram'] not in args.gram:
             continue
         if args.genre is not None:
             if args.genre != word_data['genre']:
@@ -99,7 +89,7 @@ if __name__ == "__main__":
         if args.riche:
             syllabized_query = syllabizer(pho_query)
             syllabized_list = syllabizer(pho_list)
-            if natural_rime_length(syllabized_query, syllabized_list) >= 2:
+            if rime_length(syllabized_query, syllabized_list) >= 2:
                 rimes.append(mot)
         elif args.numerique is not None:
             if rime_length(pho_query, pho_list) >= args.numerique:
@@ -107,7 +97,7 @@ if __name__ == "__main__":
         else:
             syllabized_query = syllabizer(pho_query)
             syllabized_list = syllabizer(pho_list)
-            if natural_rime_length(syllabized_query, syllabized_list) >= 1:
+            if rime_length(syllabized_query, syllabized_list) >= 1:
                 rimes.append(mot)
 
 
