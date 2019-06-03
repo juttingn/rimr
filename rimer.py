@@ -84,9 +84,8 @@ if __name__ == "__main__":
         # Depending on the argument selected by the user regarding grammatical class, genre, number,
         # certain words are 'skipped'.
 
-        if args.gram is not None:
-            if word_data['gram'] in args.gram:
-                continue
+        if args.gram is not None and args.gram != word_data['gram']:
+            continue
         if args.genre is not None:
             if args.genre != word_data['genre']:
                 continue
