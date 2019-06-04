@@ -12,6 +12,14 @@ For voxpopuli there are some specific installation steps which are required and 
 Make sure to install a French voice (required for the phonemization of French text).
 
 ## Usage 
+To use RIMR:
+1. Run the 'extractor'.
+2. Open the 'rimer'.
+3. Input a word you would like to find rhymes for.
+4. Select grammatical criteria, at this point, you are encouraged to input '-h' into the console for further details. You may combine multiple criteria or choose not to discriminate any word. 
+5. Select rhyming criteria: 'poor' or 'rich' rhyme or manually input the rhyme length with an (int) value. 
+6. Run the program. 
+7. The rhyming words will then be displayed on the screen. 
 
 ## Potential Improvements
 First of all, we would have liked RIMR to support languages other than French, such as English, German or Spanish for example. To do this, we should have found a lexicon with structure and information similar to the one we found for French. Then, we would have adapted the code to the new format of the lexicon, but a priori no problem with word phonemization because voxpopuli supports languages other than French.
